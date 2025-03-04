@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Mouse Pro Valorant",
+    "description": "Mouse gamer de alta precisión.",
+    "price": 250,
+    "discountCode": "VALORANT10",
+    "discountPercentage": 0.1,
+    "image": "https://via.placeholder.com/300x200?text=Mouse+Gamer"
+  },
+  {
+    "id": 2,
+    "name": "Teclado RGB Gamer",
+    "description": "Teclado mecánico con retroiluminación RGB.",
+    "price": 350,
+    "discountCode": "RGB15",
+    "discountPercentage": 0.15,
+    "image": "https://via.placeholder.com/300x200?text=Teclado+RGB"
+  }
+]

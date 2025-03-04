@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Gamer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .product {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .product img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    .product h3 {
+      margin-top: 0;
+    }
+    .discount-section {
+      margin-top: 10px;
+    }
+    .discount-section input,
+    .discount-section button {
+      padding: 8px;
+      margin-top: 5px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .buy-button {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tienda Gamer</h1>
+  <div id="products"></div>
+
+  <script>
+    // Función para cargar los productos desde el archivo JSON
+    async function loadProducts() {
+      try {
+        const response = await fetch('products.json');
+        const products = await response.json();
+        displayProducts(products);
+      } catch (error) {
+        console.error('Error cargando productos:', error);
+      }
+    }
+
+    // Función para mostrar los productos en la página
+    function displayProducts(products) {
+      const container = document.getElementById('products');
+      products.forEach(product => {
+        const div = document.createElement('div');
+        div.className = 'product';
+
+        div.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>${product.description}</p>
+          <p>Precio: S/. <span id="precio-${product.id}">${product.price}</span></p>
+          <div class="discount-section">
+            <input type="text" id="codigo-${product.id}" placeholder="Ingresa código de descuento">
+            <button onclick="aplicarDescuento(${product.id}, ${product.price}, '${product.discountCode}', ${product.discountPercentage})">Aplicar Descuento</button>
+          </div>
+          <p>Precio Final: S/. <span id="final-${product.id}">${product.price}</span></p>
+          <button class="buy-button" onclick="enviarWhatsApp(${product.id})">Comprar por WhatsApp</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Función para aplicar el descuento al producto
+    function aplicarDescuento(id, precioBase, codigoValido, descuentoPorcentaje) {
+      const codigoIngresado = document.getElementById(`codigo-${id}`).value;
+      let precioFinal = precioBase;
+      if (codigoIngresado === codigoValido) {
+        precioFinal = precioBase - (precioBase * descuentoPorcentaje);
+      }
+      document.getElementById(`final-${id}`).innerText = precioFinal.toFixed(2);
+    }
+
+    // Función para enviar el mensaje de WhatsApp con el precio final
+    function enviarWhatsApp(id) {
+      const precioFinal = document.getElementById(`final-${id}`).innerText;
+      // Cambia este número por tu número de WhatsApp, sin símbolos ni espacios
+      const phoneNumber = '51987654321';
+      const mensaje = encodeURIComponent(`Hola, quiero comprar el producto con ID ${id} por S/. ${precioFinal}`);
+      window.open(`https://wa.me/${phoneNumber}?text=${mensaje}`, '_blank');
+    }
+
+    // Inicia la carga de productos
+    loadProducts();
+  </script>
+</body>
+</html>
