@@ -1,20 +1,13 @@
 [
   {
     "id": 1,
-    "name": "Mouse Pro Valorant",
-    "description": "Mouse gamer de alta precisión.",
-    "price": 250,
-    "discountCode": "VALORANT10",
-    "discountPercentage": 0.1,
-    "image": "https://via.placeholder.com/300x200?text=Mouse+Gamer"
-  },
-  {
-    "id": 2,
-    "name": "Teclado RGB Gamer",
-    "description": "Teclado mecánico con retroiluminación RGB.",
-    "price": 350,
-    "discountCode": "RGB15",
-    "discountPercentage": 0.15,
-    "image": "https://via.placeholder.com/300x200?text=Teclado+RGB"
+    "name": "Mousepad Satur Red Version",
+    "description": "Pad tipo control con superficie amplia y base antideslizante, que te brinda precisión y comodidad en cada partida.",
+    "price": 220,
+    "discounts": [
+      { "code": "Ferdy5", "percentage": 0.05 },
+      { "code": "Extra5", "percentage": 0.05 }
+    ],
+    "image": "PXL_20250227_012546059 (1).jpg"
   }
 ]
