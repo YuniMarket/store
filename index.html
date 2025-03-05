@@ -72,9 +72,7 @@
     function displayProducts(products) {
       const container = document.getElementById('products');
       products.forEach(product => {
-        // Convertimos el array de descuentos a un string para pasarlo al onclick
         const discountsString = JSON.stringify(product.discounts);
-
         const div = document.createElement('div');
         div.className = 'product';
         div.innerHTML = `
@@ -89,7 +87,7 @@
             </button>
           </div>
           <p>Precio Final: S/. <span id="final-${product.id}">${product.price}</span></p>
-          <button class="buy-button" onclick="enviarWhatsApp(${product.id})">
+          <button class="buy-button" onclick='enviarWhatsApp(${product.id}, "${product.name}")'>
             Comprar por WhatsApp
           </button>
         `;
@@ -99,12 +97,10 @@
 
     // 3. Función para aplicar descuento (ignora mayúsculas y espacios)
     function aplicarDescuento(id, precioBase, discounts) {
-      // Elimina espacios y convierte a minúsculas
       const codigoIngresado = document.getElementById(`codigo-${id}`).value.trim().toLowerCase();
       let precioFinal = precioBase;
 
       if (Array.isArray(discounts)) {
-        // Busca un descuento cuyo 'code' coincida en minúsculas
         const descuentoEncontrado = discounts.find(d => d.code.toLowerCase() === codigoIngresado);
         if (descuentoEncontrado) {
           precioFinal = precioBase - (precioBase * descuentoEncontrado.percentage);
@@ -114,12 +110,11 @@
       document.getElementById(`final-${id}`).innerText = precioFinal.toFixed(2);
     }
 
-    // 4. Función para abrir WhatsApp con el precio final
-    function enviarWhatsApp(id) {
+    // 4. Función para abrir WhatsApp con el precio final y nombre del producto
+    function enviarWhatsApp(id, productName) {
       const precioFinal = document.getElementById(`final-${id}`).innerText;
-      // Cambia este número por el tuyo en formato internacional sin espacios ni símbolos
       const phoneNumber = '51942885866';
-      const mensaje = encodeURIComponent(`Hola, quiero comprar el producto con ID ${id} por S/. ${precioFinal}`);
+      const mensaje = encodeURIComponent(`Hola, quiero comprar ${productName} a S/. ${precioFinal}`);
       window.open(`https://wa.me/${phoneNumber}?text=${mensaje}`, '_blank');
     }
 
